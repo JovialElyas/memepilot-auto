@@ -1,0 +1,1 @@
+[gmgn-cli] POST /v1/trenches failed: HTTP 429 code=429 error=RATE_LIMIT_BANNED message=IP is temporarily banned due to repeated rate limit violations. Rate limit resets at 2026-10-31 15:44:04 GMT-04:00 (~20s remaining). Stop sending requests before then; repeated requests can extend the ban by 5s up to 5 minutes.

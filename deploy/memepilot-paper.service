@@ -1,0 +1,38 @@
+# MemePilot — bot PAPIER en continu (aucun ordre réel possible).
+# Installé par deploy/bootstrap.sh ; mis à jour par la CI/CD (docs/CI_CD.md).
+[Unit]
+Description=MemePilot Auto V2 - trading papier
+After=network-online.target
+Wants=network-online.target
+# Après 5 plantages en 30 min, systemd abandonne : un arrêt visible vaut mieux qu'une boucle de crash.
+StartLimitIntervalSec=1800
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=memepilot
+Group=memepilot
+WorkingDirectory=/opt/memepilot-auto/current
+Environment=PYTHONUNBUFFERED=1
+# Options du bot (clé, intervalles) : modifiables sans redéployer dans shared/service.env, par ex.
+#   MEMEPILOT_ARGS=--plan free --interval 15
+Environment=MEMEPILOT_ARGS=--demo
+EnvironmentFile=-/opt/memepilot-auto/shared/service.env
+ExecStart=/opt/memepilot-auto/current/.venv/bin/python scripts/paper_trade.py --no-browser $MEMEPILOT_ARGS
+Restart=on-failure
+RestartSec=30
+
+# Durcissement : code en lecture seule, écriture limitée aux données et au home du service
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/memepilot-auto/shared /home/memepilot
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryMax=600M
+
+[Install]
+WantedBy=multi-user.target

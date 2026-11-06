@@ -1,0 +1,23 @@
+{
+ "address": "Fp4JkqEcKYKBKhb9iMu9NSDeo71HWgq2q9QtXaaKpump",
+ "pool_address": "2rmaFtFZmJtLXdPgRvk417RLc9GBD3jGbAqtttmfG3AF",
+ "quote_address": "So11111111111111111111111111111111111111112",
+ "quote_symbol": "SOL",
+ "liquidity": "95870.870118336",
+ "base_reserve": "49765762.693443",
+ "quote_reserve": "499.327448533",
+ "initial_liquidity": "17023.569774999",
+ "initial_base_reserve": "206900000",
+ "initial_quote_reserve": "84.99036333",
+ "creation_timestamp": 1793074424,
+ "base_reserve_value": "50936.5818860265560838",
+ "quote_reserve_value": "47935.435059168",
+ "quote_vault_address": "4CM42MRrfeH9RxP8YM9bp6BkYho1DSeYRtLnYyj8ojmF",
+ "base_vault_address": "5XGTL4FhfrEh9fSS2wHeCiuBEyFtEvM9cWBD2NZ5aJj1",
+ "creator": "",
+ "exchange": "pump_amm",
+ "token0_address": "",
+ "token1_address": "",
+ "base_address": "Fp4JkqEcKYKBKhb9iMu9NSDeo71HWgq2q9QtXaaKpump",
+ "fee_ratio": "0"
+}

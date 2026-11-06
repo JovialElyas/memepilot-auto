@@ -1,0 +1,19 @@
+# Limites financières — validées au démarrage par memepilot.config.limits.
+# Toute valeur hors bornes empêche le démarrage.
+# maximum_cumulative_loss_usd ne peut JAMAIS dépasser le plafond codé en dur (20 USD).
+
+initial_capital_usd: 50
+maximum_cumulative_loss_usd: 20
+daily_loss_limit_usd: 15        # D-033 (2026-11-01) : 10 → 15 pour 2 positions de 5 $ (propriétaire) ; D-028 : 5 → 10
+
+max_position_usd: 5          # D-033 : 5 $ par position, quel que soit le risque (LOW/MEDIUM)
+min_position_usd: 5          # D-033 : jamais moins de 5 $ (frais ≈ 4 % au lieu de 6,4 %) ; D-010 : 2
+max_concurrent_positions: 2
+max_trades_per_day: 100      # D-032 (2026-11-01) : 10 → 100 (propriétaire) ; limites de perte inchangées
+
+max_slippage_pct: 30         # plafond ; la stratégie peut demander moins
+max_order_retries: 1
+
+leverage: false
+automatic_reloading: false
+external_withdrawals: false

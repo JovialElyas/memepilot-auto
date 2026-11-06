@@ -1,0 +1,73 @@
+name: ci-cd
+
+# CI : à chaque push / pull request → lint, typage, tests, essai hors ligne, recherche de secrets.
+# CD : seulement sur `main`, si la CI est verte ET si la variable de dépôt DEPLOY_ENABLED vaut "true".
+#      Le déploiement passe par l'environnement GitHub « production » (tu peux y exiger ton approbation).
+# Mise en place : docs/CI_CD.md
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m ruff check .
+      - run: python -m mypy
+      - run: python -m pytest
+      - name: Essai du bot papier hors ligne (2 cycles, sans réseau)
+        run: python scripts/paper_trade.py --offline --cycles 2 --interval 1 --monitor 2 --no-browser --port 0
+
+  secrets-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    needs: [test, secrets-scan]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Paquet de la version (fichiers suivis par Git uniquement : aucun .env, aucune base)"
+        run: git archive --format=tar.gz -o release.tar.gz HEAD
+      - name: Clé SSH de déploiement
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts   # empreinte du serveur épinglée
+      - name: Envoi, tests sur le serveur, bascule, contrôle de santé (retour arrière automatique)
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          SHA: ${{ github.sha }}
+        run: |
+          OPTS=(-i "$HOME/.ssh/deploy_key" -o StrictHostKeyChecking=yes -o BatchMode=yes)
+          # La clé n'ouvre aucun shell : le serveur force la commande deploy_gate.sh (« deploy <sha> » seulement).
+          # shellcheck disable=SC2029  # le sha est volontairement développé côté runner
+          ssh "${OPTS[@]}" "memepilot@$HOST" "deploy $SHA" < release.tar.gz
