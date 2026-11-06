@@ -1,0 +1,40 @@
+# Secrets — ne jamais versionner
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Données locales
+*.db
+*.db-*
+*.sqlite*
+data/
+logs/
+reports/out/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Écrit par le déploiement
+REVISION

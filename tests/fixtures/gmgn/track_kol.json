@@ -1,0 +1,179 @@
+{
+ "list": [
+  {
+   "transaction_hash": "3kHgMfw2fvfdy8mFJLbBz2MkCULgswFKcxS4Aqr6QSsg7sCfFKxBAiFnvg3pWD7srvE3agMAEAN42r6biv7U3X6p",
+   "maker": "DYAn4XpAkN5mhiXkRB7dGq4Jadnx6XYgu8L5b3WGhbrt",
+   "base_amount": 5930440.662558,
+   "quote_amount": 2.89139755,
+   "buy_cost_usd": 0,
+   "token_amount": 5930440.662558,
+   "amount_usd": 999.779074948794,
+   "price": 4.875518893992e-07,
+   "price_usd": 0.00016858428097273198,
+   "timestamp": 1793475828,
+   "side": "buy",
+   "is_open_or_close": 0,
+   "base_address": "66auXVTRw9ZekMeB8h5jdJS9WhMRVz8zfMyzqeinpump",
+   "balance": 0,
+   "base_token": {
+    "symbol": "AAPLCAT",
+    "logo": "https://gmgn.ai/external-res/35563ed221b73bc4648caec971783b27_v2.webp",
+    "total_supply": "957094425.463623",
+    "launchpad": "pump"
+   },
+   "maker_info": {
+    "avatar": "https://gmgn.ai/defi/images/twitter/d622cdbdcfb1150bd235a5bcf44d72ad.jpg",
+    "name": "",
+    "tags": [
+     "trojan",
+     "kol",
+     "app_smart_money",
+     "smart_degen",
+     "arbitrager"
+    ],
+    "twitter_username": "KayTheDoc",
+    "twitter_name": "Doc 🧲"
+   }
+  },
+  {
+   "transaction_hash": "3kHgMfw2fvfdy8mFJLbBz2MkCULgswFKcxS4Aqr6QSsg7sCfFKxBAiFnvg3pWD7srvE3agMAEAN42r6biv7U3X6p",
+   "maker": "DYAn4XpAkN5mhiXkRB7dGq4Jadnx6XYgu8L5b3WGhbrt",
+   "base_amount": 2.25347482,
+   "quote_amount": 779.2,
+   "buy_cost_usd": 0,
+   "token_amount": 2.25347482,
+   "amount_usd": 779.2,
+   "price": 345.7771052440692,
+   "price_usd": 345.7771052440692,
+   "timestamp": 1793475828,
+   "side": "buy",
+   "is_open_or_close": 0,
+   "base_address": "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
+   "balance": 0,
+   "base_token": {
+    "symbol": "AAPLx",
+    "logo": "https://gmgn.ai/external-res/ad6860f61cce15da371abeafb2ba32fa_v2.webp",
+    "total_supply": "153761.999234",
+    "launchpad": ""
+   },
+   "maker_info": {
+    "avatar": "https://gmgn.ai/defi/images/twitter/d622cdbdcfb1150bd235a5bcf44d72ad.jpg",
+    "name": "",
+    "tags": [
+     "trojan",
+     "kol",
+     "app_smart_money",
+     "smart_degen",
+     "arbitrager"
+    ],
+    "twitter_username": "KayTheDoc",
+    "twitter_name": "Doc 🧲"
+   }
+  },
+  {
+   "transaction_hash": "3kHgMfw2fvfdy8mFJLbBz2MkCULgswFKcxS4Aqr6QSsg7sCfFKxBAiFnvg3pWD7srvE3agMAEAN42r6biv7U3X6p",
+   "maker": "DYAn4XpAkN5mhiXkRB7dGq4Jadnx6XYgu8L5b3WGhbrt",
+   "base_amount": 0.63863683,
+   "quote_amount": 220.8,
+   "buy_cost_usd": 0,
+   "token_amount": 0.63863683,
+   "amount_usd": 220.8,
+   "price": 345.73640233057023,
+   "price_usd": 345.73640233057023,
+   "timestamp": 1793475828,
+   "side": "buy",
+   "is_open_or_close": 0,
+   "base_address": "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
+   "balance": 0,
+   "base_token": {
+    "symbol": "AAPLx",
+    "logo": "https://gmgn.ai/external-res/ad6860f61cce15da371abeafb2ba32fa_v2.webp",
+    "total_supply": "153761.999234",
+    "launchpad": ""
+   },
+   "maker_info": {
+    "avatar": "https://gmgn.ai/defi/images/twitter/d622cdbdcfb1150bd235a5bcf44d72ad.jpg",
+    "name": "",
+    "tags": [
+     "trojan",
+     "kol",
+     "app_smart_money",
+     "smart_degen",
+     "arbitrager"
+    ],
+    "twitter_username": "KayTheDoc",
+    "twitter_name": "Doc 🧲"
+   }
+  },
+  {
+   "transaction_hash": "4xfrtBL1pdAojpug5Nb3bfpABQakGV1FktGVivpJgq4GCcmj1MCtthdsVtn1tkb2G1ftSToUthg6wyefUqAfYuFq",
+   "maker": "97K6nsFhBWDKwQf6heDDhDtsCRC4779LPHSFZkc2zqK4",
+   "base_amount": 143356.011386,
+   "quote_amount": 1.432345722,
+   "buy_cost_usd": 140.36726557238535,
+   "token_amount": 143356.011386,
+   "amount_usd": 137.49086585478,
+   "price": 9.99152883894956e-06,
+   "price_usd": 0.0009590868532507683,
+   "timestamp": 1793475817,
+   "side": "sell",
+   "is_open_or_close": 0,
+   "base_address": "MsGDybWRSNdNXkdDZhEksgzugT5CbVWUG2wkhwgpump",
+   "balance": 0,
+   "base_token": {
+    "symbol": "MeiMei",
+    "logo": "https://gmgn.ai/external-res/b1c7b321141d181920351757fa15b290_v2.webp",
+    "total_supply": "999772487.024694",
+    "launchpad": "pump"
+   },
+   "maker_info": {
+    "avatar": "https://gmgn.ai/defi/images/twitter/52500820a939c438393cb3725c75bc6b.jpg",
+    "name": "",
+    "tags": [
+     "kol",
+     "wash_trader",
+     "gmgn_go",
+     "arbitrager",
+     "gmgn"
+    ],
+    "twitter_username": "NikolaiHauckx",
+    "twitter_name": "Nikolai"
+   }
+  },
+  {
+   "transaction_hash": "4xfrtBL1pdAojpug5Nb3bfpABQakGV1FktGVivpJgq4GCcmj1MCtthdsVtn1tkb2G1ftSToUthg6wyefUqAfYuFq",
+   "maker": "97K6nsFhBWDKwQf6heDDhDtsCRC4779LPHSFZkc2zqK4",
+   "base_amount": 56066859.528596,
+   "quote_amount": 145170.644443,
+   "buy_cost_usd": 185.32351642547195,
+   "token_amount": 56066859.528596,
+   "amount_usd": 139.23125656322298,
+   "price": 0.0025892415887670333,
+   "price_usd": 2.483307567676594e-06,
+   "timestamp": 1793475817,
+   "side": "sell",
+   "is_open_or_close": 1,
+   "base_address": "XtpiZNZY1JCH7nwC3wiYB7WfzFLZvNn2i1NeJYdpump",
+   "balance": 0,
+   "base_token": {
+    "symbol": "paws",
+    "logo": "https://gmgn.ai/external-res/2eed9ce76228c7c5c2d8263b9cfd02a3_v2.webp",
+    "total_supply": "1000000000",
+    "launchpad": "pump"
+   },
+   "maker_info": {
+    "avatar": "https://gmgn.ai/defi/images/twitter/52500820a939c438393cb3725c75bc6b.jpg",
+    "name": "",
+    "tags": [
+     "kol",
+     "wash_trader",
+     "gmgn_go",
+     "arbitrager",
+     "gmgn"
+    ],
+    "twitter_username": "NikolaiHauckx",
+    "twitter_name": "Nikolai"
+   }
+  }
+ ]
+}

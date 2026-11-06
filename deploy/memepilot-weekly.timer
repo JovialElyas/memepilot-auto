@@ -1,0 +1,9 @@
+[Unit]
+Description=MemePilot - rapport chaque dimanche 18:07 UTC
+
+[Timer]
+OnCalendar=Sun *-*-* 18:07:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

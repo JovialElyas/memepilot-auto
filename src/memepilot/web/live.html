@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MemePilot Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#09090a;--bg2:#0e0e10;--card:#131316;--card2:#18181c;--line:#26262c;--line2:#1d1d22;
+  --txt:#e9e7e1;--txt2:#bdbab2;--dim:#85837b;--dim2:#56554f;
+  --acc:#b8f53d;--acc-d:#6f9a1f;--red:#ff5a4e;--amber:#f5b041;--cyan:#5cc8d6;--violet:#a78bfa;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;--disp:'Bricolage Grotesque',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(120% 60% at 10% -10%,#15170f 0%,transparent 55%),var(--bg);color:var(--txt);
+  font:12.5px/1.45 var(--mono);min-height:100vh}
+a{color:inherit;text-decoration:none}
+.app{max-width:1500px;margin:0 auto;padding:12px 16px 24px;display:flex;flex-direction:column;gap:10px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);
+  border-radius:14px;padding:10px 16px;background:linear-gradient(180deg,var(--card2),var(--card))}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--acc);color:#0b0b0b;display:grid;place-items:center;
+  font:800 17px var(--disp);box-shadow:0 0 18px #b8f53d55}
+.brand h1{font:800 19px/1 var(--disp);letter-spacing:-.01em}.brand h1 i{color:var(--acc);font-style:normal}
+.brand .tag{font-size:9.5px;color:var(--dim);letter-spacing:.18em;margin-top:4px}
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill{border:1px solid var(--line);border-radius:9px;padding:5px 10px;background:var(--bg2);min-width:74px}
+.pill .k{display:block;font-size:8.5px;letter-spacing:.14em;color:var(--dim2)}
+.pill .v{font-weight:600;font-size:12.5px;white-space:nowrap}
+.pill.live .v::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);
+  box-shadow:0 0 8px var(--acc);margin-right:6px;animation:blink 1.6s infinite}
+.pill.off .v::before{background:var(--red);box-shadow:0 0 8px var(--red)}
+.pill.warn{border-color:#f5b04155}.pill.warn .v{color:var(--amber)}
+.pill.bad{border-color:#ff5a4e66}.pill.bad .v{color:var(--red)}
+@keyframes blink{50%{opacity:.3}}
+.banner{border:1px solid #f5b04155;background:linear-gradient(90deg,#f5b0411a,#b8f53d0d);color:var(--amber);
+  border-radius:10px;padding:7px 14px;font-size:11.5px;text-align:center}
+.banner.red{border-color:var(--red);color:var(--red);background:#ff5a4e14}
+.kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:9px 13px 11px;background:linear-gradient(180deg,var(--card),var(--bg2));
+  position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--c,var(--acc));opacity:.55}
+.kpi .k{font-size:9px;letter-spacing:.13em;color:var(--dim)}
+.kpi .v{font:800 23px/1.15 var(--disp);margin-top:5px;white-space:nowrap}
+.kpi .v small{font:600 12px var(--mono);color:var(--dim)}
+.kpi .s{font-size:9.5px;color:var(--dim2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meter{height:4px;border-radius:3px;background:var(--line2);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--c,var(--acc));border-radius:3px;transition:width .4s}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:10px;align-items:start}
+.col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.card{border:1px solid var(--line);border-radius:13px;background:linear-gradient(180deg,var(--card2),var(--card));min-width:0}
+.card h3{font:700 12.5px var(--disp);color:var(--txt2);display:flex;align-items:center;gap:8px;padding:9px 14px;
+  border-bottom:1px solid var(--line)}
+.card h3 .dotc{width:6px;height:6px;border-radius:2px;background:var(--acc)}
+.card h3 .cnt{margin-left:auto;font:400 10px var(--mono);color:var(--dim)}
+.body{padding:4px 0}.scroll{max-height:520px;overflow:auto}
+table{width:100%;border-collapse:collapse}
+th{position:sticky;top:0;background:var(--card);color:var(--dim);font-weight:500;font-size:9px;letter-spacing:.12em;
+  text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);z-index:1}
+td{padding:6px 10px;border-bottom:1px solid var(--line2);vertical-align:middle;white-space:nowrap}
+tr.prop{background:#b8f53d0b;box-shadow:inset 3px 0 0 var(--acc)}
+tr.veto td{opacity:.62}
+.sym{font:800 13.5px var(--disp)}.sym small{display:block;font:400 9px var(--mono);color:var(--dim2)}
+.sym a:hover{color:var(--acc)}
+.badge{display:inline-block;font-size:9px;letter-spacing:.08em;padding:2px 6px;border-radius:5px;border:1px solid}
+.b-LOW{color:var(--acc);border-color:#b8f53d55}.b-MEDIUM{color:var(--amber);border-color:#f5b04155}
+.b-HIGH{color:var(--red);border-color:#ff5a4e55}
+.score{display:flex;align-items:center;gap:7px}.score b{width:30px;text-align:right}
+.sbar{position:relative;width:80px;height:6px;background:var(--line2);border-radius:3px}
+.sbar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--dim)}
+.sbar.hi i{background:var(--acc)}.sbar u{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--amber)}
+.mods{display:flex;gap:3px}
+.mod{width:24px;height:16px;border-radius:4px;font-size:8.5px;display:grid;place-items:center;color:#0b0b0b;font-weight:600}
+.mod.v{outline:1px solid var(--red);color:var(--red);background:transparent!important}
+.up{color:var(--acc)}.dn{color:var(--red)}.mu{color:var(--dim)}
+.why{max-width:260px;overflow:hidden;text-overflow:ellipsis;color:var(--dim);font-size:10.5px}
+.gd-ok{color:var(--acc)}.gd-no{color:var(--amber)}
+.pos{padding:11px 14px;border-bottom:1px solid var(--line2)}
+.pos:last-child{border-bottom:0}
+.pos .top{display:flex;justify-content:space-between;align-items:baseline}
+.pos .pnl{font:800 22px var(--disp)}
+.pos .row{display:flex;justify-content:space-between;color:var(--dim);font-size:10.5px;margin-top:3px}
+.track{position:relative;height:8px;border-radius:4px;margin:9px 0 3px;
+  background:linear-gradient(90deg,#ff5a4e55 0%,var(--line2) 33%,var(--line2) 66%,#b8f53d55 100%)}
+.track i{position:absolute;top:-3px;width:3px;height:14px;border-radius:2px;background:var(--txt);transition:left .5s}
+.track .lab{position:absolute;top:11px;font-size:8.5px;color:var(--dim2);transform:translateX(-50%)}
+.empty{padding:18px 14px;color:var(--dim2);text-align:center}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding:10px 14px}
+.stats div{display:flex;justify-content:space-between;color:var(--dim)}.stats b{color:var(--txt);font-weight:600}
+.rej{padding:0 14px 10px;color:var(--dim2);font-size:10px}
+.log{max-height:300px;overflow:auto;font-size:10.5px}
+.log div{padding:4px 14px;border-bottom:1px solid var(--line2);display:flex;gap:8px}
+.log time{color:var(--dim2);flex:0 0 56px}.log .buy{color:var(--acc)}.log .sell{color:var(--cyan)}.log .err{color:var(--amber)}
+.log .halt{color:var(--red)}
+svg.eq{display:block;width:100%;height:90px}
+.note{margin:8px 14px 2px;padding:8px 11px;border-radius:9px;font-size:11px;line-height:1.5;
+  border:1px solid #f5b04144;background:#f5b0410f;color:var(--amber)}
+.note b{color:var(--txt)}
+.next{margin-top:7px;padding:6px 9px;border-radius:8px;background:var(--bg2);border:1px solid var(--line2);
+  font-size:10.5px;color:var(--txt2);line-height:1.55}
+.next b{color:var(--acc);font-weight:600}.next .w{color:var(--amber)}
+.rules{padding:8px 14px 11px;color:var(--dim);font-size:10px;line-height:1.6;border-top:1px solid var(--line2)}
+.rules b{color:var(--txt2);font-weight:600}
+.health{display:flex;gap:6px;padding:10px 14px 0;flex-wrap:wrap}
+.hchip{font-size:10px;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--txt2)}
+.hchip.ok{border-color:#b8f53d44;color:var(--acc)}.hchip.bad{border-color:#f5b04155;color:var(--amber)}
+.foot{color:var(--dim2);font-size:10px;text-align:center;margin-top:4px}
+@media (max-width:1180px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.grid{grid-template-columns:1fr}
+  .grid>.col:last-child{order:-1}}
+@media (max-width:640px){.app{padding:10px 16px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hide-s{display:none}.brand h1{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <div class="brand"><div class="logo">M</div>
+      <div><h1>MemePilot<i>/</i>Auto V2</h1><div class="tag">PAPIER · SOLANA · GMGN</div></div></div>
+    <div class="pills" id="pills"></div>
+  </header>
+  <div class="banner" id="banner">Mode PAPIER : aucune transaction possible. Un achat ici est une simulation enregistrée dans le ledger.</div>
+  <section class="kpis" id="kpis"></section>
+  <main class="grid">
+    <div class="col">
+      <div class="card"><h3><span class="dotc"></span>Pipeline : candidats du dernier cycle complet<span class="cnt" id="pipecnt"></span></h3>
+        <div id="pipenote"></div>
+        <div class="body scroll"><table>
+          <thead><tr><th>TOKEN</th><th>RISQUE</th><th>SCORE</th><th title="momentum · smart money · early">MODULES</th>
+            <th>5 MIN</th><th class="hide-s">1 H</th><th class="hide-s">LIQ.</th><th class="hide-s">ÂGE</th><th>DÉCISION</th></tr></thead>
+          <tbody id="pipe"></tbody></table></div></div>
+      <div class="card"><h3><span class="dotc" style="background:var(--cyan)"></span>Trades fermés<span class="cnt" id="closedcnt"></span></h3>
+        <svg class="eq" id="eq" viewBox="0 0 600 90" preserveAspectRatio="none"></svg>
+        <div class="body scroll" style="max-height:260px"><table>
+          <thead><tr><th>TOKEN</th><th>P&amp;L</th><th>SORTIE</th><th class="hide-s">DURÉE</th><th>PROFIL · DONNÉES</th><th class="hide-s">FERMÉ</th></tr></thead>
+          <tbody id="closed"></tbody></table></div></div>
+    </div>
+    <div class="col">
+      <div class="card"><h3><span class="dotc"></span>Positions ouvertes<span class="cnt" id="poscnt"></span></h3><div id="pos"></div><div class="rules" id="rules"></div></div>
+      <div class="card"><h3><span class="dotc" style="background:var(--violet)"></span>Scan<span class="cnt" id="scanage"></span></h3>
+        <div class="health" id="health"></div><div class="stats" id="scan"></div><div class="rej" id="rej"></div></div>
+      <div class="card"><h3><span class="dotc" style="background:var(--amber)"></span>Journal en direct</h3><div class="log" id="log"></div></div>
+    </div>
+  </main>
+  <div class="foot">Interface en lecture seule · arrêt d'urgence : <code>python scripts\risk_admin.py halt --reason "..."</code></div>
+</div>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const usd = (x, sign) => x == null ? "—" : (sign && x > 0 ? "+" : "") + x.toFixed(2) + " $";
+const pct = x => x == null ? '<span class="mu">—</span>'
+  : `<span class="${x >= 0 ? "up" : "dn"}">${Math.abs(x) >= 1000 ? (x > 0 ? ">+999" : "<-999") : (x > 0 ? "+" : "") + x.toFixed(1)}%</span>`;
+const kfmt = x => x == null ? "—" : x >= 1e6 ? (x / 1e6).toFixed(1) + "M" : x >= 1e3 ? (x / 1e3).toFixed(0) + "k" : x.toFixed(0);
+const ago = s => s < 60 ? Math.round(s) + " s" : s < 3600 ? Math.round(s / 60) + " min" : (s / 3600).toFixed(1) + " h";
+const p2 = n => String(n).padStart(2, "0");
+const hhmm = ts => { const d = new Date(ts * 1000); return p2(d.getHours()) + ":" + p2(d.getMinutes()) + ":" + p2(d.getSeconds()); };
+const modColor = m => m.veto ? "" : `background:hsl(${80 * m.score / 100 + 0},70%,${30 + m.conf * 25}%)`;
+const gmgn = a => `https://gmgn.ai/sol/token/${encodeURIComponent(a)}`;
+let last = 0, failed = 0;
+
+function srcPill(m) {
+  // Source des données du dernier cycle complet : GMGN, relais gratuit (DexScreener + GeckoTerminal + RugCheck) ou mixte
+  const s = m.sources, last = m.data_source;
+  if (!s) return ["", "DONNÉES", "GMGN"];
+  const lbl = {gmgn: "GMGN", relais: "relais gratuit", mixte: "GMGN + relais"}[last] || "—";
+  const mode = {auto: "auto", relay: "relais seul", gmgn: "GMGN seul"}[s.mode];
+  return [last && last !== "gmgn" ? "warn" : "", "DONNÉES (" + mode + ")", lbl];
+}
+
+function pills(d) {
+  const m = d.meta, k = d.kpis, cyc = m.last_cycle_ts ? d.now - m.last_cycle_ts : null;
+  const items = [
+    [failed ? "off live" : "live", "STATUT", failed ? "déconnecté" : "en direct"],
+    ["", "DERNIER CYCLE", cyc == null ? "—" : "il y a " + ago(cyc)],
+    [m.limited_streak > 0 ? "warn" : "", "PROCHAIN SCAN", m.next_cycle_ts ? (m.next_cycle_ts > d.now ? "dans " + ago(m.next_cycle_ts - d.now) : "en cours") : "en cours"],
+    ["", "SURVEILLANCE", "toutes les " + m.monitor_s + " s"],
+    ["", "PROFIL", m.profile + " · seuil " + m.threshold],
+    ["", "CLÉ", m.key],
+    srcPill(m),
+    ["", "SOL", d.scan.sol_usd ? d.scan.sol_usd.toFixed(2) + " $" : "—"],
+    ["", "APPELS GMGN", m.gmgn_calls],
+    ["", "VERSION", (m.version || "local").slice(0, 7)],
+  ];
+  if (m.frozen_s > 0) items.push(["warn", "DÉBIT", "gel " + Math.round(m.frozen_s) + " s"]);
+  else if (m.gmgn_frozen_s > 0 && m.sources && m.sources.mode === "auto") items.push(["warn", "GMGN", "gelé " + Math.round(m.gmgn_frozen_s) + " s → relais"]);
+  if (k.halted) items.push(["bad", "ÉTAT", "HALT"]);
+  if (k.locked) items.push(["bad", "ÉTAT", "LOCK"]);
+  $("pills").innerHTML = items.map(([c, kk, v]) => `<div class="pill ${c}"><span class="k">${kk}</span><span class="v">${esc(v)}</span></div>`).join("")
+    + `<div class="pill"><span class="k">HEURE</span><span class="v">${hhmm(d.now)}</span></div>`;
+  const b = $("banner");
+  if (k.locked) { b.className = "banner red"; b.textContent = "LOCK : " + k.lock_reason + ". Plus aucun achat jusqu'au déverrouillage manuel."; }
+  else if (k.halted) { b.className = "banner red"; b.textContent = "HALT : aucun nouvel achat. Reprise : python scripts\\risk_admin.py resume"; }
+  else { b.className = "banner"; b.textContent = "Mode PAPIER : aucune transaction possible. Un achat ici est une simulation enregistrée dans le ledger."; }
+}
+
+function kpis(d) {
+  const k = d.kpis, tile = (key, v, s, c, meter) => `<div class="kpi" style="--c:${c}"><div class="k">${key}</div><div class="v">${v}</div>`
+    + (meter != null ? `<div class="meter"><i style="width:${Math.min(100, meter * 100)}%"></i></div>` : "") + `<div class="s">${s}</div></div>`;
+  const pnlc = x => x == null ? "var(--dim)" : x >= 0 ? "var(--acc)" : "var(--red)";
+  $("kpis").innerHTML = [
+    tile("CAPITAL RÉALISÉ", usd(k.capital), "départ " + usd(k.start), "var(--acc)"),
+    tile("P&L RÉALISÉ", `<span style="color:${pnlc(k.realized_pnl)}">${usd(k.realized_pnl, 1)}</span>`, k.closed + " trades · win rate " + (k.win_rate == null ? "—" : k.win_rate + " %"), pnlc(k.realized_pnl)),
+    tile("P&L LATENT", `<span style="color:${pnlc(k.unrealized)}">${usd(k.unrealized, 1)}</span>`, "positions ouvertes, prix live", pnlc(k.unrealized)),
+    tile("PERTE DU JOUR", `${(k.day_loss ?? 0).toFixed(2)}<small> / ${k.day_limit} $</small>`, "limite quotidienne", "var(--amber)", (k.day_loss ?? 0) / k.day_limit),
+    tile("PERTE CUMULÉE", `${(k.cum_loss ?? 0).toFixed(2)}<small> / ${k.cum_limit} $</small>`, "LOCK définitif à " + k.cum_limit + " $", "var(--red)", (k.cum_loss ?? 0) / k.cum_limit),
+    tile("BUDGET DE RISQUE", usd(k.budget_day), "exposition " + usd(k.exposure), "var(--cyan)"),
+    tile("TRADES", `${k.trades_today}<small> / ${k.trades_limit}</small>`, `positions ${k.slots} / ${k.slots_limit}`, "var(--violet)", k.trades_today / k.trades_limit),
+  ].join("");
+}
+
+function pipe(d) {
+  const th = d.meta.threshold, m = d.meta;
+  const tried = (m.cycles_ok || 0) + (m.cycles_limited || 0);
+  let note = "";
+  if (m.limited_streak > 0) {
+    const both = m.sources && m.sources.mode === "auto";
+    note = `<div class="note"><b>${both ? "GMGN et relais tous deux limités" : "Clé de démo saturée"}</b> : ${m.limited_streak} cycle(s) d'affilée bloqué(s)
+      (${m.cycles_ok || 0} complet(s) sur ${tried} depuis le démarrage). La clé est partagée par tous les utilisateurs de la démo ;
+      le bot espace ses essais automatiquement. ${d.candidates.length ? "Tableau ci-dessous : <b>dernier cycle complet, il y a " + ago(d.now - m.data_cycle_ts) + "</b>." : ""}
+      Les positions ouvertes restent surveillées.</div>`;
+  } else if (m.data_source && m.data_source !== "gmgn") {
+    note = `<div class="note">GMGN limité : ce cycle utilise le <b>relais gratuit</b> (DexScreener + GeckoTerminal + RugCheck).
+      Sécurité et prix sont vérifiés ; le module <b>smart money est en retrait</b> (flux GMGN seulement).</div>`;
+  } else if (m.from_cache && d.candidates.length) {
+    note = `<div class="note">Données du <b>dernier cycle complet enregistré (il y a ${ago(d.now - m.data_cycle_ts)})</b> ; le prochain cycle les remplacera.</div>`;
+  }
+  $("pipenote").innerHTML = note;
+  $("pipecnt").textContent = d.candidates.length + " affichés · " + (d.scan.survivors ?? 0) + " passent la sécurité";
+  $("pipe").innerHTML = d.candidates.map(c => {
+    const s = c.signals, mods = ["momentum", "smart_money", "early_token"].map((n, i) => {
+      const m = s[n]; return m ? `<span class="mod ${m.veto ? "v" : ""}" style="${modColor(m)}" title="${n} ${m.score} (confiance ${m.conf})${m.veto ? " — veto" : ""}">${m.veto ? "✕" : Math.round(m.score)}</span>` : `<span class="mod" style="background:var(--line2)"></span>`;
+    }).join("");
+    const g = c.guardian, dec = c.propose ? (g ? (g.ok ? `<span class="gd-ok">ACHAT ${g.size} $</span>` : `<span class="gd-no" title="${esc(g.why)}">refus Guardian</span>`) : `<span class="gd-ok">PROPOSE</span>`)
+      : `<span class="why" title="${esc(c.reason)}">${esc(c.reason)}</span>`;
+    return `<tr class="${c.propose ? "prop" : ""} ${/veto/.test(c.reason) ? "veto" : ""}">
+      <td class="sym"><a href="${gmgn(c.address)}" target="_blank" rel="noopener noreferrer">${esc(c.symbol || "?")}</a><small>${esc(c.address.slice(0, 4) + "…" + c.address.slice(-4))}</small></td>
+      <td><span class="badge b-${esc(c.risk)}">${esc(c.risk)}</span></td>
+      <td><div class="score"><b>${c.score.toFixed(0)}</b><div class="sbar ${c.score >= th ? "hi" : ""}"><i style="width:${Math.min(100, c.score)}%"></i><u style="left:${th}%"></u></div></div></td>
+      <td><div class="mods">${mods}</div></td><td>${pct(c.chg5m)}</td><td class="hide-s">${pct(c.chg1h)}</td>
+      <td class="hide-s">${kfmt(c.liq)}</td><td class="hide-s">${c.age_min == null ? "—" : ago(c.age_min * 60)}</td><td>${dec}</td></tr>`;
+  }).join("") || `<tr><td colspan="9" class="empty">${tried ? "Aucun cycle complet pour l'instant : chaque essai a été bloqué par la limite de débit de la clé de démo. Le bot réessaie tout seul."
+    : "Premier cycle en cours (≈ 6 s)…"}</td></tr>`;
+}
+
+function nextExit(p, ex) {
+  // Explique en clair ce qui fera sortir la position (mêmes règles que paper/exits.py)
+  const v = p.pnl_pct ?? 0, armed = p.peak_pct >= ex.trail_after_pct, left = ex.time_stop_min - p.age_min;
+  const out = [];
+  if (ex.take_profit_pct != null && p.take_profit != null)
+    out.push(`🎯 <b>Prise de profit</b> : tout est vendu à <b>${p.take_profit.toPrecision(4)}</b> (+${ex.take_profit_pct} %).`);
+  if (armed) {
+    const dd = p.peak_pct >= ex.tight_above_pct ? ex.tight_dd_pct : ex.trail_dd_pct;
+    const floor = ex.floor_pct != null && p.sell_at_pct != null && p.sell_at_pct <= ex.floor_pct + 0.05;
+    out.push(`<b>Gain protégé</b> : vente si le prix passe sous <b>${p.sell_at == null ? "—" : p.sell_at.toPrecision(4)}</b>` +
+      ` (${p.sell_at_pct > 0 ? "+" : ""}${p.sell_at_pct} %) — ` +
+      (floor ? `plancher de gain +${ex.floor_pct} % (frais couverts).` : `−${dd} % sous le sommet (+${p.peak_pct} %).`));
+  }
+  else if (left > 0) out.push(v >= ex.time_stop_gain_pct
+      ? `À ${ex.time_stop_min} min (<b>dans ${left.toFixed(0)} min</b>) : on garde, le gain dépasse +${ex.time_stop_gain_pct} %.`
+      : `<span class="w">Time-stop dans ${left.toFixed(0)} min</span> si le gain reste sous +${ex.time_stop_gain_pct} % (actuellement ${v > 0 ? "+" : ""}${v.toFixed(1)} %).`);
+  else out.push(`Time-stop passé : la position est gardée car elle dépasse +${ex.time_stop_gain_pct} % ; sortie au plus tard à ${ex.max_hold_min} min.`);
+  if (ex.partial_at_pct != null) out.push(p.partial_done
+      ? `💰 Moitié déjà vendue à +${ex.partial_at_pct} % : le reste roule.`
+      : `Moitié vendue automatiquement à +${ex.partial_at_pct} %.`);
+  out.push(`Stop-loss à ${p.stop.toPrecision(4)} (−${ex.stop_loss_pct} %)` + (armed ? "" : ` · trailing armé à +${ex.trail_after_pct} %`) + ".");
+  return out.join("<br>");
+}
+
+function positions(d) {
+  const ex = d.exits;
+  $("poscnt").textContent = d.positions.length + " / " + (d.kpis.slots_limit ?? 2);
+  $("pos").innerHTML = d.positions.map(p => {
+    // Échelle : stop-loss (−25 %) à gauche, activation du trailing (+50 %) à droite
+    const lo = -ex.stop_loss_pct, hi = ex.trail_after_pct, v = p.pnl_pct ?? 0;
+    const x = Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100)), z = (0 - lo) / (hi - lo) * 100;
+    return `<div class="pos"><div class="top"><span class="sym"><a href="${gmgn(p.address)}" target="_blank" rel="noopener noreferrer">${esc(p.symbol || "?")}</a>
+      <small>${esc(p.strategy)} · ${usd(p.cost)}</small></span>
+      <span class="pnl ${v >= 0 ? "up" : "dn"}">${p.pnl_pct == null ? "—" : (v > 0 ? "+" : "") + v.toFixed(1) + "%"}</span></div>
+      <div class="track"><i style="left:calc(${x}% - 1px)"></i><span class="lab" style="left:0%;transform:none">stop ${lo}%</span>
+      <span class="lab" style="left:${z}%">0</span><span class="lab" style="right:0;left:auto;transform:none">trailing +${hi}%</span></div>
+      <div class="row" style="margin-top:16px"><span>P&amp;L ${usd(p.pnl, 1)} · pic ${p.peak_pct > 0 ? "+" : ""}${p.peak_pct}%</span><span>${p.age_min} / ${p.time_stop_min} min</span></div>
+      <div class="row"><span>entrée ${p.entry.toPrecision(4)}</span><span>prix ${p.last == null ? "—" : p.last.toPrecision(4)}${p.missing ? " · prix absent ×" + p.missing : ""}</span></div>
+      <div class="next">${nextExit(p, ex)}</div></div>`;
+  }).join("") || `<div class="empty">Aucune position. Le bot attend une proposition validée par le Guardian.</div>`;
+  $("rules").innerHTML = `<b>Règles de sortie</b> (vérifiées toutes les ${d.meta.monitor_s} s) :${ex.take_profit_pct != null ? ` <b>vente totale à +${ex.take_profit_pct} %</b> ·` : ""} stop-loss −${ex.stop_loss_pct} % ·
+    trailing −${ex.trail_dd_pct} % sous le sommet une fois +${ex.trail_after_pct} % atteint (−${ex.tight_dd_pct} % au-delà de +${ex.tight_above_pct} %)${ex.floor_pct != null ? ` · jamais sous +${ex.floor_pct} % une fois le trailing armé` : ""}${ex.partial_at_pct != null ? ` · moitié vendue à +${ex.partial_at_pct} %` : ""} · time-stop à ${ex.time_stop_min} min si gain &lt; +${ex.time_stop_gain_pct} % ·
+    chute de liquidité −${ex.liq_drop_pct} % · durée max ${ex.max_hold_min} min.`;
+}
+
+function scan(d) {
+  const s = d.scan, m = d.meta;
+  $("health").innerHTML = `<span class="hchip ok">${m.cycles_ok || 0} cycle(s) complet(s)</span>`
+    + `<span class="hchip ${m.cycles_limited ? "bad" : ""}">${m.cycles_limited || 0} bloqué(s) par le débit</span>`
+    + (m.frozen_s > 0 ? `<span class="hchip bad">gel GMGN ${Math.round(m.frozen_s)} s</span>` : "");
+  const age = d.meta.data_cycle_ts ? " · données d'il y a " + ago(d.now - d.meta.data_cycle_ts) : "";
+  $("scanage").textContent = (s.duration_s != null ? "cycle en " + s.duration_s + " s" : "") + age;
+  const row = (k, v) => `<div><span>${k}</span><b>${v}</b></div>`;
+  $("scan").innerHTML = s.seen == null ? `<div class="empty">—</div>` : [row("tokens vus", s.seen), row("sécurité OK", s.survivors), row("rejetés", s.rejected),
+    row("propositions", s.proposals), row("meilleur score", s.best), row("trades SM lus", s.feed_trades + (s.feed_ok ? "" : " ⚠"))].join("");
+  $("rej").textContent = (s.top_rejects || []).length ? "Rejets : " + s.top_rejects.map(([r, n]) => r + " ×" + n).join(" · ") : "";
+}
+
+function closed(d) {
+  $("closedcnt").textContent = d.kpis.closed + " au total";
+  $("closed").innerHTML = d.closed.map(t => `<tr><td class="sym">${esc(t.symbol || "?")}</td>
+    <td class="${t.pnl >= 0 ? "up" : "dn"}">${usd(t.pnl, 1)}</td><td class="why">${esc(t.reason)}</td>
+    <td class="hide-s">${t.held_min} min</td><td>${esc(t.profile)}${t.strict_ok ? " ✓" : ""} · ${esc(t.source || "gmgn")}</td><td class="hide-s">${hhmm(t.closed_ts)}</td></tr>`).join("")
+    || `<tr><td colspan="6" class="empty">Aucun trade fermé pour l'instant.</td></tr>`;
+  const e = d.equity;
+  if (e.length < 2) { $("eq").innerHTML = ""; return; }
+  const vs = e.map(p => p[1]), mn = Math.min(...vs, d.kpis.start ?? vs[0]) - 0.5, mx = Math.max(...vs, d.kpis.start ?? vs[0]) + 0.5;
+  const t0 = e[0][0], t1 = e[e.length - 1][0] || t0 + 1;
+  const X = t => (t - t0) / (t1 - t0 || 1) * 600, Y = v => 84 - (v - mn) / (mx - mn) * 78;
+  const path = e.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
+  const base = Y(d.kpis.start ?? vs[0]).toFixed(1), up = vs[vs.length - 1] >= (d.kpis.start ?? vs[0]);
+  $("eq").innerHTML = `<line x1="0" x2="600" y1="${base}" y2="${base}" stroke="#56554f" stroke-dasharray="3 4"/>
+    <path d="${path}" fill="none" stroke="${up ? "#b8f53d" : "#ff5a4e"}" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`;
+}
+
+function logs(d) {
+  const cls = {buy: "buy", sell: "sell", error: "err", halt: "halt", lock: "halt"};
+  $("log").innerHTML = d.log.map(l => `<div><time>${hhmm(l.ts)}</time><span class="${cls[l.kind] || ""}">${esc(l.msg)}</span></div>`).join("")
+    || `<div class="empty">—</div>`;
+}
+
+async function tick() {
+  try {
+    const r = await fetch("/api/state", {cache: "no-store"});
+    if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    failed = 0;
+    pills(d); kpis(d); pipe(d); positions(d); scan(d); closed(d); logs(d);
+  } catch (e) {
+    failed++;
+    const p = document.querySelector(".pill.live");
+    if (p) { p.classList.add("off"); p.querySelector(".v").textContent = "bot arrêté ?"; }
+  }
+}
+tick();
+setInterval(tick, 2000);
+</script>
+</body>
+</html>

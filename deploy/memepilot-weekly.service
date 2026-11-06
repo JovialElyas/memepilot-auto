@@ -1,0 +1,8 @@
+[Unit]
+Description=MemePilot - rapport hebdomadaire papier (Telegram)
+
+[Service]
+Type=oneshot
+User=memepilot
+WorkingDirectory=/opt/memepilot-auto
+ExecStart=/opt/memepilot-auto/.venv/bin/python scripts/weekly_report.py --send
