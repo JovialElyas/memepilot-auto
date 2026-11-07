@@ -34,16 +34,21 @@ jobs:
 
   secrets-scan:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read  # gitleaks-action lit les commits des pull requests
+    env:
+      GITLEAKS_VERSION: 8.21.2
+      GITLEAKS_SHA256: 5bc41815076e6ed6ef8fbecc9d9b75bcae31f39029ceb55da08086315316e3ba
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Binaire officiel de gitleaks, version figée et empreinte vérifiée.
+      # Pas d'action tierce ni d'appel à l'API GitHub : fonctionne aussi sur les pull requests Dependabot.
+      - name: Recherche de secrets dans tout l'historique (gitleaks)
+        run: |
+          curl -sSfL -o gitleaks.tgz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tgz" | sha256sum -c -
+          tar xzf gitleaks.tgz gitleaks
+          ./gitleaks git . --no-banner --redact -c .gitleaks.toml
 
   deploy:
     needs: [test, secrets-scan]
