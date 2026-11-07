@@ -7,6 +7,8 @@ name = "memepilot"
 version = "2.0.0a1"
 description = "MemePilot Auto V2 — système de trading Solana contrôlé par des garde-fous déterministes"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Jovial Elyas Bearivo" }]
 dependencies = [
   "pydantic>=2.8,<3",
   "pyyaml>=6.0,<7",

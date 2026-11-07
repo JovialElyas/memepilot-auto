@@ -4,6 +4,7 @@
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)
 ![Tests](https://img.shields.io/badge/tests-264%20passed-brightgreen)
 ![mypy](https://img.shields.io/badge/mypy-strict-informational)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 Bot de **trading papier** (simulation) de memecoins sur Solana, construit autour d'une idée simple :
 **les garde-fous passent avant la stratégie.** Les données viennent de GMGN en lecture seule ; chaque achat
@@ -114,3 +115,8 @@ python -m pytest
 
 **Jovial Elyas Bearivo** — étudiant en informatique appliquée, Université de Moncton.
 [GitHub](https://github.com/JovialElyas) · [LinkedIn](https://www.linkedin.com/in/jovial-elyas-bearivo)
+
+## Licence
+
+Distribué sous licence [MIT](LICENSE) : tu peux utiliser, modifier et redistribuer ce code, en conservant
+la mention de copyright. Le logiciel est fourni « tel quel », sans garantie.
