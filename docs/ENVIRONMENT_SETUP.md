@@ -1,6 +1,6 @@
 # ENVIRONMENT_SETUP — Environnement de développement (Windows 11)
 
-État au 2026-10-31, d'après ton rapport d'avancement.
+État de référence au 2026-10-31.
 
 ## 1. État actuel
 
@@ -10,7 +10,7 @@
 | Python | 3.12.10 via le lanceur `py` | ✔ (≥ 3.11 requis) |
 | Environnement virtuel | `memepilot-auto\.venv`, préfixe `(.venv)` visible | ✔ |
 | Node.js / npm | installés | ✔ |
-| gmgn-cli | **1.7.1**, global, `C:\Users\beari\AppData\Roaming\npm\gmgn-cli.cmd` | ✔ (version épinglée du projet) |
+| gmgn-cli | **1.7.1**, global, `%APPDATA%\npm\gmgn-cli.cmd` | ✔ (version épinglée du projet) |
 | Nom de la commande | `gmgn-cli` (pas `gmgn`) | ✔ |
 | Dépendances du projet (`pip install -e ".[dev]"`) | **non mentionné** | ⏳ |
 | Tests (`pytest`) sous Windows | **non mentionné** | ⏳ |
@@ -31,7 +31,7 @@
 Si le venv est vraiment actif, `pip` devrait exister. Vérifie que c'est bien le Python du venv qui tourne :
 ```powershell
 python -c "import sys; print(sys.prefix)"
-# attendu : C:\Users\beari\Downloads\memepilot-auto\.venv
+# attendu : <dossier du projet>\.venv
 ```
 Si le chemin affiché n'est pas `.venv`, réactive le venv. Avec le venv actif, `py -m pip` utilise bien le venv, mais `py -3.12 -m pip` (version précisée) viserait le Python global. Pour éviter toute ambiguïté, préfère `python -m pip`.
 

@@ -1,0 +1,22 @@
+# Configuration gitleaks : règles par défaut + faux positifs connus.
+# Les fichiers ci-dessous ne contiennent AUCUN secret réel :
+#   - tests/fixtures : réponses d'API publiques (adresses Solana publiques, identifiants de routes) ;
+#   - tests/unit     : fausses clés écrites exprès pour tester le masquage des secrets ;
+#   - generate_signing_key.py : expression régulière qui DÉTECTE une clé privée pour la masquer.
+title = "MemePilot gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Fixtures publiques et fausses clés de test"
+paths = [
+  '''^tests/fixtures/''',
+  '''^tests/unit/test_settings_and_redaction\.py$''',
+  '''^tests/unit/test_signing_key_script\.py$''',
+  '''^tests/unit/test_relay\.py$''',
+]
+# Expression régulière de détection dans scripts/generate_signing_key.py (pas une clé).
+regexes = [
+  '''-----BEGIN PRIVATE KEY-----\[\\s\\S\]\+\?-----END PRIVATE KEY-----''',
+]
